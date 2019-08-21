@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <locale.h>
 #include <time.h>
+#define MAX 100
 #define QUEBRA "\n\n\n"
-#define OPCOES "[1]-Intersecção entre A e B \n[2]-União entre A e B \n[3]-Diferença A menos B \n[4]-Diferença B menos A \n[5]Verificar se um elemento arbitrário pertence ao conjunto \n[6]Verificar se há elemtos repetidos em A ou B \n[7]Eliminar elementos repitidos de um conjunto \n[8]Verificar se um conjunto é vazio\n[9]Determinar a quantidade de elementos do conjunto\n[10]Visualizar em qualquer momeno os conjuntos envolvidos A e B e os conjuntos resultantes \n\nEscolha uma operação:"
+#define OPCOES "\n[1] Intersecção entre A e B \n[2] União entre A e B \n[3] Diferença A menos B \n[4] Diferença B menos A \n[5] Verificar se um elemento arbitrário pertence ao conjunto \n[6] Verificar se há elemtos repetidos em A ou B \n[7] Eliminar elementos repitidos de um conjunto \n[8] Verificar se um conjunto é vazio\n[9] Determinar a quantidade de elementos do conjunto\n[10] Visualizar em qualquer momeno os conjuntos envolvidos A e B e os conjuntos resultantes \n\nEscolha uma operação:"
 
 void Bubble_Sort (int *A, int Dim)
 {
@@ -11,11 +12,11 @@ void Bubble_Sort (int *A, int Dim)
     while ( (i< Dim) && continua )
     {
         continua = 0;
-        lim = dim - 1;
+        lim = Dim - 1;
         for(j=0; j<lim; j++)
-            if ( *(A+j+1) < *(A=j) )
+            if ( *(A+j+1) < *(A+j) )
             {
-                Troca (A, j, j+1);
+                Troca (A, j);
                 continua = 1;
             }
         i++;
@@ -31,8 +32,20 @@ void Troca(int *Ptra, int *Ptrb) {
  *Ptrb = aux;
 }
 
+void Aleatorio(int *A, int Dim)
+{
+ int i;
+ clock_t seed;
 
-void Aleatorio();
+ seed = clock();
+ srand((unsigned) seed);
+ for (i = 0; i < Dim; i++)
+     A[i]= rand();
+
+ return;
+}
+
+
 void Introduzido();
 void Ordenacao();
 void Interseccao();
@@ -58,7 +71,7 @@ int main(void)
     puts(QUEBRA);
     printf("Escolha uma operação: ");
     scanf("%d", &x);
-    }while(x>=1 && x<=3);
+    }while(x<1 || x>3);
 
     switch(x){
     case 1: do{system("cls");puts(OPCOES);scanf("%d", &y);}while(y<1 || y>10);break;
