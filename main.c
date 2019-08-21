@@ -1,8 +1,37 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <time.h>
 #define QUEBRA "\n\n\n"
-#define OPCOES "[1]-IntersecÁ„o entre A e B \n[2]-Uni„o entre A e B \n[3]-DiferenÁa A menos B \n[4]-DiferenÁa B menos A \n[5]Verificar se um elemento arbitr·rio pertence ao conjunto \n[6]Verificar se h· elemtos repetidos em A ou B \n[7]Eliminar elementos repitidos de um conjunto \n[8]Verificar se um conjunto È vazio\n[9]Determinar a quantidade de elementos do conjunto\n[10]Visualizar em qualquer momeno os conjuntos envolvidos A e B e os conjuntos resultantes \n\nEscolha uma operaÁ„o:"
+#define OPCOES "[1]-Intersec√ß√£o entre A e B \n[2]-Uni√£o entre A e B \n[3]-Diferen√ßa A menos B \n[4]-Diferen√ßa B menos A \n[5]Verificar se um elemento arbitr√°rio pertence ao conjunto \n[6]Verificar se h√° elemtos repetidos em A ou B \n[7]Eliminar elementos repitidos de um conjunto \n[8]Verificar se um conjunto √© vazio\n[9]Determinar a quantidade de elementos do conjunto\n[10]Visualizar em qualquer momeno os conjuntos envolvidos A e B e os conjuntos resultantes \n\nEscolha uma opera√ß√£o:"
+
+void Bubble_Sort (int *A, int Dim)
+{
+    int i=1, j=1, lim, continua=1;
+    while ( (i< Dim) && continua )
+    {
+        continua = 0;
+        lim = dim - 1;
+        for(j=0; j<lim; j++)
+            if ( *(A+j+1) < *(A=j) )
+            {
+                Troca (A, j, j+1);
+                continua = 1;
+            }
+        i++;
+    }
+return;
+}
+
+void Troca(int *Ptra, int *Ptrb) {
+ int aux;
+
+ aux = *Ptra;
+ *Ptra = *Ptrb;
+ *Ptrb = aux;
+}
+
+
 void Aleatorio();
 void Introduzido();
 void Ordenacao();
@@ -22,12 +51,12 @@ int main(void)
     int x, y;
     do{
     system("cls");
-    printf(" ####### Trabalho pr·tico de programaÁ„o 1 - ATP 2 #######");
+    printf(" ####### Trabalho pr√°tico de programa√ß√£o 1 - ATP 2 #######");
     puts(QUEBRA);
     printf("Como deseja gerar os conjuntos A e B?\n\n");
     printf("[1]-Gerar randomicamente \n[2]-Introduzir os valores\n[3]-Sair");
     puts(QUEBRA);
-    printf("Escolha uma operaÁ„o: ");
+    printf("Escolha uma opera√ß√£o: ");
     scanf("%d", &x);
     }while(x>=1 && x<=3);
 
