@@ -43,15 +43,18 @@ void Swap(int *Ptra) {
  *(Ptra+1) = aux;
 }
 
-void Random(int *A, int Dim)
+void Random(int *A, int *B, int Dim)
 {
- int i;
+ int i,j;
  clock_t seed;
 
  seed = clock();
  srand((unsigned) seed);
  for (i = 0; i < Dim; i++)
      A[i]= rand();
+
+ for (j = 0; j < Dim; j++)
+     B[j]= rand();
 
  return;
 }
@@ -79,7 +82,7 @@ int main(void)
     }while(x<1 || x>3);
 
     switch(x){
-    case 1: do{Random(VA,MAX);Random(VB,MAX); Bubble_Sort(VA, MAX);Bubble_Sort(VB, MAX);system("cls");puts(OPCOES);scanf("%d", &y);}while(y<1 || y>10);break;
+    case 1: do{Random(VA,VB,MAX); Bubble_Sort(VA, MAX);Bubble_Sort(VB, MAX);system("cls");puts(OPCOES);scanf("%d", &y);}while(y<1 || y>10);break;
     case 2: do{system("cls");puts(OPCOES);scanf("%d", &y);}while(y<1 || y>10);break;
     case 3: return 0;
     }
