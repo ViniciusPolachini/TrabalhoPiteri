@@ -16,7 +16,7 @@ void Bubble_Sort (int *A, int Dim)
         for(j=0; j<lim; j++)
             if ( *(A+j+1) < *(A+j) )
             {
-                Troca (A, j);
+                Swap (A, j);
                 continua = 1;
             }
         i++;
@@ -24,7 +24,7 @@ void Bubble_Sort (int *A, int Dim)
 return;
 }
 
-void Troca(int *Ptra, int *Ptrb) {
+void Swap(int *Ptra, int *Ptrb) {
  int aux;
 
  aux = *Ptra;
@@ -32,7 +32,7 @@ void Troca(int *Ptra, int *Ptrb) {
  *Ptrb = aux;
 }
 
-void Aleatorio(int *A, int Dim)
+void Random(int *A, int Dim)
 {
  int i;
  clock_t seed;
