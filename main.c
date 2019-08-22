@@ -27,7 +27,7 @@ void Bubble_Sort (int *A, int Dim)
         for(j=0; j<lim; j++)
             if ( *(A+j+1) < *(A+j) )
             {
-                Swap (A, j);
+                Swap (A+j);
                 continua = 1;
             }
         i++;
@@ -35,12 +35,12 @@ void Bubble_Sort (int *A, int Dim)
 return;
 }
 
-void Swap(int *Ptra, int *Ptrb) {
+void Swap(int *Ptra) {
  int aux;
 
  aux = *Ptra;
- *Ptra = *Ptrb;
- *Ptrb = aux;
+ *Ptra = *(Ptra+1);
+ *(Ptra+1) = aux;
 }
 
 void Random(int *A, int Dim)
@@ -65,7 +65,7 @@ void Visualizar(int *ptrA, int *ptrB){
 
 int main(void)
 {
-    setlocale(LC_ALL,"portuguese");
+    setlocale(LC_ALL,"Portuguese");
     int x, y, VA[MAX],VB[MAX],VC[MAX*2];
     do{
     system("cls");
@@ -79,7 +79,7 @@ int main(void)
     }while(x<1 || x>3);
 
     switch(x){
-    case 1: do{Random(VA,MAX);Random(VB,MAX);system("cls");puts(OPCOES);scanf("%d", &y);}while(y<1 || y>10);break;
+    case 1: do{Random(VA,MAX);Random(VB,MAX); Bubble_Sort(VA, MAX);Bubble_Sort(VB, MAX);system("cls");puts(OPCOES);scanf("%d", &y);}while(y<1 || y>10);break;
     case 2: do{system("cls");puts(OPCOES);scanf("%d", &y);}while(y<1 || y>10);break;
     case 3: return 0;
     }
