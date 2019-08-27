@@ -8,16 +8,22 @@
 
 
 int Dimensao(){
- int dim;
- do{
-  printf("Selecione um tamanho para os conjuntos entre 1 e 100: ");
-  scanf("%d", &dim);
- }while(dim<1 || dim>MAX);
- return(dim);
+     int dim;
+
+     do{
+      printf("Selecione um tamanho para os conjuntos entre 1 e 100: ");
+      scanf("%d", &dim);
+     }while(dim<1 || dim>MAX);
+
+     return(dim);
 }
 void Introduzir(int *ptr, int dim){
-int i;
-for(i=0; i<=dim-1; i++) scanf("%d", &*(ptr+i));
+    int i;
+
+    for(i=0; i<=dim-1; i++){
+        printf("\nV[%d]: ", i);
+        scanf("%d", (ptr+i));
+        }
 }
 
 void Bubble_Sort (int *ptrA, int Dim)
@@ -39,34 +45,35 @@ return;
 }
 
 void Swap(int *PtrA) {
- int aux;
+     int aux;
 
- aux = *PtrA;
- *PtrA = *(PtrA+1);
- *(PtrA+1) = aux;
+     aux = *PtrA;
+     *PtrA = *(PtrA+1);
+     *(PtrA+1) = aux;
 }
 
 void Random(int *ptrA, int *ptrB, int Dim)
 {
- int i,j;
- clock_t seed;
+     int i,j;
+     clock_t seed;
+     seed = clock();
 
- seed = clock();
- srand((unsigned) seed);
- for (i = 0; i < Dim; i++)
-     ptrA[i]= rand();
+     srand((unsigned) seed);
+     for (i = 0; i < Dim; i++)
+         ptrA[i]= rand();
 
- for (j = 0; j < Dim; j++)
-     ptrB[j]= rand();
+     for (j = 0; j < Dim; j++)
+         ptrB[j]= rand();
 
- return;
+     return;
 }
 
 
-void Visualizar(int *ptrA, int *ptrB, int dim){
+void Visualizar(int *ptr, int dim){
     int i;
+
     for(i=0; i<=dim-1; i++){
-        printf("%d////%d\n", *(ptrA+i), *(ptrB+i));
+        printf("\n%d", *(ptr+i));
     }
 }
 
@@ -74,6 +81,7 @@ int main(void)
 {
     int x, y, dim=0,VA[dim],VB[dim],VC[dim*2];
     setlocale(LC_ALL,"portuguese");
+
     do{
     system("cls");
     printf(" ####### Trabalho pratico de programacao 1 - ATP 2 #######");
@@ -87,12 +95,32 @@ int main(void)
     }while(x<1 || x>3);
 
     switch(x){
-    case 1: do{Random(VA,VB,dim); Bubble_Sort(VA, dim);Bubble_Sort(VB, dim);system("cls");puts(OPCOES);scanf("%d", &y);}while(y<1 || y>10);break;
-    case 2: do{system("cls");printf("Introduza os valores de A:"); Introduzir(VA, dim);printf("Introduza os valores de B:"); Introduzir(VB, dim);puts(OPCOES);scanf("%d", &y);}while(y<1 || y>10);break;
+    case 1: do{Random(VA,VB,dim);
+            Bubble_Sort(VA, dim);
+            Bubble_Sort(VB, dim);
+            system("cls");
+            puts(OPCOES);
+            scanf("%d", &y);}while(y<1 || y>10);
+            break;
+
+    case 2: do{system("cls");
+            printf("Introduza os valores de A:");
+            Introduzir(VA, dim);printf("Introduza os valores de B:");
+            Introduzir(VB, dim); Bubble_Sort(VA, dim);
+            Bubble_Sort(VB, dim);
+            puts(OPCOES);
+            scanf("%d", &y);}while(y<1 || y>10);
+            break;
+
     case 3: return 0;
     }
+
     switch(y){
-    case 10: printf("A////B\n"); Visualizar(VA, VB, dim); break;
+    case 10:system("cls");
+            printf("Conjunto A: ");
+            Visualizar(VA,dim);
+            printf("\nConjunto B: ");
+            Visualizar(VB, dim);break;
     }
     return 0;
 }
