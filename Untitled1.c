@@ -4,8 +4,9 @@
 #include <locale.h>
 #include <time.h>
 #define MAX 100
-#define QUEBRA "\n\n\n"
-#define OPCOES "\n[1] Intersecção entre A e B \n[2] União entre A e B \n[3] Diferença A menos B \n[4] Diferença B menos A \n[5] Verificar se um elemento arbitrário pertence ao conjunto \n[6] Verificar se há elemtos repetidos em A ou B \n[7] Eliminar elementos repitidos de um conjunto \n[8] Verificar se um conjunto é vazio\n[9] Determinar a quantidade de elementos do conjunto\n[10] Visualizar em qualquer momeno os conjuntos envolvidos A e B e os conjuntos resultantes \n\nEscolha uma operação: "
+#define QUEBRA "\n\n"
+#define BARRA ----------------------------------------------------------------------------------------------------------------------------
+#define OPCOES "[1]Criar/Editar conjuntos\n[2] Intersecção entre A e B \n[3] União entre A e B \n[4] Diferença A menos B \n[5] Diferença B menos A \n[6] Verificar se um elemento arbitrário\n[7] Verificar se há elementos repetidos \n[8] Eliminar elementos repitidos de um conjunto \n[9] Verificar se um conjunto é vazio\n[10] Visualizar conjuntos\n[11]Sair \n\nEscolha uma operação:  "
 
 void Vazio(int *ptr, int dim){
     if(dim) printf("não é vazio.\n");
@@ -18,7 +19,7 @@ void Repetidos(int *ptr, int *dim){
             for(j=i+1; j<*dim; j++){
                 *(ptr+j)=*(ptr+j+1);
             }
-            *dim=*dim-1;
+        *dim=*dim-1;
         }
 }
 void Uniao(int *ptrA, int *ptrB, int *ptrC, int dimA, int dimB, int *dimC){
@@ -39,26 +40,27 @@ void Uniao(int *ptrA, int *ptrB, int *ptrC, int dimA, int dimB, int *dimC){
     return;
 }
 
-void    ElementosRep(int *ptrA, int *ptrB, int dimA, int dimB){
-    int i, j, aux=0;
-    for(i=0; i<dimA; i++)
-        for(j=0; j<dimB; j++)
-            if(*(ptrA+i)==*(ptrB+j)){
-                printf("%d\n", *(ptrA+i));
-                aux=1;
-            }
+void ElementosRep(int *ptr,int dim){
+    int i, aux=0;
+    for(i=0; i<dim; i++){
+        if(*(ptr+i)==*(ptr+i+1)){
+            aux=1;
+            printf("[%d]e[%d]=%d", i, i+1, *(ptr+i));
+        }
+    }
 
-    if(aux) printf("[ELEMENTOS REPETIDOS ACIMA]");
-        else printf("Não há elementos repetidos");
+    if(aux) printf("\nsão repetidos!!!!\n");
+        else printf("não há elementos repetidos!!\n");
 }
 
 void Interseccao(int *ptrA, int *ptrB, int *ptrC, int dimA, int dimB, int *dimC){
-    int i,j,k=0, continua;
+    int i,j,k=0, continua, aux=1;
 
     for(i=0; i<dimA; i++){
         continua=1;
         for(j=0;j<dimB && continua;j++){
             if(*(ptrA+i)==*(ptrB+j)){
+                aux=0;
                 *dimC=*dimC+1;
                 *(ptrC+k)=*(ptrA+i);
                 k++;
@@ -66,10 +68,8 @@ void Interseccao(int *ptrA, int *ptrB, int *ptrC, int dimA, int dimB, int *dimC)
             }
         }
     }
-
-    printf("Conjunto interscção: ");
-    Visualizar(ptrC, *dimC);
-
+    Repetidos(ptrC, dimC);
+    if(aux) printf("\n[VAZIO]\n");
 }
 void difAB(int *ptrA, int *ptrB, int *ptrC, int dimA, int dimB, int *dimC){
     int i,j,k=0, aux;
@@ -85,10 +85,7 @@ void difAB(int *ptrA, int *ptrB, int *ptrC, int dimA, int dimB, int *dimC){
             k++;
         }
     }
-
-    printf("A-B: ");
-    Visualizar(ptrC, *dimC);
-
+    Repetidos(ptrC, dimC);
 }
 
 void difBA(int *ptrA, int *ptrB, int *ptrC, int dimA, int dimB, int *dimC){
@@ -105,9 +102,7 @@ void difBA(int *ptrA, int *ptrB, int *ptrC, int dimA, int dimB, int *dimC){
             k++;
         }
     }
-
-    printf("A-B: ");
-    Visualizar(ptrC, *dimC);
+    Repetidos(ptrC, dimC);
 }
 
 void ElementoArb(int *ptr, int dim, int chave){
@@ -115,30 +110,26 @@ void ElementoArb(int *ptr, int dim, int chave){
 
     for(i=0; i<dim; i++){
         if(*(ptr+i)==chave){
-            printf(" Não está nesse conjunto\n");
+            printf("Está nesse conjunto\n");
             return;
         }
     }
 
-    printf(" Está nesse conjunto\n");
+    printf("Não está nesse conjunto\n");
     return;
 }
 
-int Dimensao(){
-     int dim;
-
+void Dimensao(int *dim){
      do{
-      scanf("%d", &dim);
-     }while(dim<1 || dim>MAX);
-
-     return(dim);
+      scanf("%d", dim);
+     }while(*dim<1 || *dim>MAX);
 }
 
 void Introduzir(int *ptr, int dim){
     int i;
 
     for(i=0; i<=dim-1; i++){
-        printf("\nV[%d]: ", i);
+        printf("\n[%d]: ", i);
         scanf("%d", (ptr+i));
         }
 }
@@ -157,23 +148,6 @@ for (salto=dim/2; salto>0; salto /=2){
 return;
 }
 
-void Bubble_Sort (int *ptrA, int Dim)
-{
-    int i=1, j=1, lim, continua=1;
-    while ( (i< Dim) && continua )
-    {
-        continua = 0;
-        lim = Dim - 1;
-        for(j=0; j<lim; j++)
-            if ( *(ptrA+j+1) < *(ptrA+j) )
-            {
-                Troca (ptrA+j);
-                continua = 1;
-            }
-        i++;
-    }
-return;
-}
 
 void Troca(int *PtrA) {
      int aux;
@@ -200,108 +174,237 @@ void Random(int *ptrA, int *ptrB, int DimA, int DimB)
 
 void Visualizar(int *ptr, int dim){
     int i;
-
     for(i=0; i<=dim-1; i++){
-        printf("\n%d", *(ptr+i));
+        printf("[%d]=%d\n", i,*(ptr+i));
     }
 }
 
 int main(void)
 {
-    int dimA=MAX, dimB=MAX, dimC=MAX*2, VA[dimA],VB[dimB],VC[dimC], x, y;
-    dimC=0;
+    int dimA=MAX, dimB=MAX, dimC=MAX*2, VA[dimA],VB[dimB],VC[dimC], x, y, z, continua=1;
+    char ch='N';
+    dimA=0;
+    dimB=0;
     setlocale(LC_ALL,"Portuguese");
-
     do{
     system("cls");
-    printf(" ####### Trabalho pratico de programacao 1 - ATP 2 #######");
+    printf("[TRABALHO PRÁTICO DE PROGRAMAÇÃO]");
     puts(QUEBRA);
-    printf("Selecione um tamanho para o conjunto A, entre 1 e 100: ");
-    dimA = Dimensao();
-    printf("Selecione um tamanho para o conjunto B, entre 1 e 100: ");
-    dimB = Dimensao();
-    printf("Como deseja gerar os conjuntos A e B?\n\n");
-    printf("[1]-Gerar randomicamente \n[2]-Introduzir os valores\n[3]-Sair");
+    if(!dimA && !dimB) printf("[ALERTA]: todos os conjuntos estão vazios");
     puts(QUEBRA);
-    printf("Escolha uma operação: ");
-    scanf("%d", &x);
-    }while(x<1 || x>3);
-
-    switch(x){
-    case 1: do{Random(VA,VB,dimA, dimB);
-            ShellSort(VA, dimA);
-            ShellSort(VB, dimB);
-            system("cls");
-            puts(OPCOES);
-            scanf("%d", &y);}while(y<1 || y>10);
-            break;
-
-    case 2: do{system("cls");
-            printf("Introduza os valores de A:");
-            Introduzir(VA, dimA);
-            printf("Introduza os valores de B:");
-            Introduzir(VB, dimB);
-            ShellSort(VA, dimA);
-            ShellSort(VB, dimB);
-            puts(OPCOES);
-            scanf("%d", &y);}while(y<1 || y>10);
-            break;
-
-    case 3: return(0);
-    }
-
+    puts(OPCOES);
+    scanf("%d", &y);
     switch(y){
     case 1:system("cls");
-            Interseccao(VA, VB, VC, dimA, dimB, &dimC);
-            break;
-    case 2:system("cls");
-           Uniao(VA, VB, VC, dimA, dimB, &dimC);
-           Visualizar(VC, dimC);
+           printf("Qual conjunto você deseja editar?\n[1]A e B\n[2]A\n[3]B\n[4]VOLTAR\n[OPÇÃO]=");
+           scanf("%d", &x);
            break;
-    case 3:system("cls");
-            difAB(VA, VB, VC, dimA, dimB, &dimC);
+
+    case 2:system("cls");
+            dimC=0;
+            printf("[INTERSECÇÃO]\n");
+            Interseccao(VA, VB, VC, dimA, dimB, &dimC);
+            Visualizar(VC, dimC);
+            system("pause");
             break;
+
+    case 3:system("cls");
+           dimC=0;
+           Uniao(VA, VB, VC, dimA, dimB, &dimC);
+           printf("[UNIÃO]\n");
+           Visualizar(VC, dimC);
+           system("pause");
+           break;
     case 4:system("cls");
-            difBA(VA, VB, VC, dimA, dimB, &dimC);
+            dimC=0;
+            difAB(VA, VB, VC, dimA, dimB, &dimC);
+            printf("A-B:\n");
+            Visualizar(VC, dimC);
+            system("pause");
             break;
     case 5:system("cls");
-            int chave;
-           printf("Escolha um elemento: ");
-           scanf("%d", &chave);
-           printf("VA: ");
-           ElementoArb(VA, dimA, chave);
-           printf("VB: ");
-           ElementoArb(VB, dimB, chave);
-           printf("VC: ");
-           ElementoArb(VC, dimC, chave);
+            dimC=0;
+            difBA(VA, VB, VC, dimA, dimB, &dimC);
+            printf("B-A:\n");
+            Visualizar(VC, dimC);
+            system("pause");
             break;
     case 6:system("cls");
-            ElementosRep(VA, VB, dimA, dimB);
+            int chave;
+           printf("Deseja checar a existencia de um elemento arbitrário no conjunto:\n[1]A e B\n[2]A\n[3]B\n[4]Último conjunto resultante\n[5]VOLTAR\n[OPÇÃO]=");
+           scanf("%d", &z);
+           printf("Escolha um elemento: ");
+           scanf("%d", &chave);
+           if(z==1){
+                printf("VA: ");
+                ElementoArb(VA, dimA, chave);
+                printf("VB: ");
+                ElementoArb(VB, dimB, chave);
+           };
+           if(z==2){
+                printf("VA: ");
+                ElementoArb(VA, dimA, chave);
+           };
+           if(z==3){
+                printf("VB: ");
+                ElementoArb(VB, dimB, chave);
+           };
+           if(z==4){
+                printf("[CONJUNTO RESULTANTE]:");
+                ElementoArb(VC, dimC, chave);
+           }
+           system("pause");
             break;
     case 7:system("cls");
-            Repetidos(VA, &dimA);
-            Repetidos(VB, &dimB);
-            printf("Conjunto A: ");
-            Visualizar(VA,dimA);
-            printf("\nConjunto B: ");
-            Visualizar(VB, dimB);
+            printf("Deseja checar a existencia de elementos repetidos no conjunto:\n[1]A e B\n[2]A\n[3]B\n[4]VOLTAR\n[OPÇÃO]=");
+            scanf("%d", &z);
+            if(z==1){
+                printf("Em A ");
+                ElementosRep(VA, dimA);
+                printf("Em B ");
+                ElementosRep(VB, dimB);
+            };
+             if(z==2){
+                printf("Em A ");
+                ElementosRep(VA, dimA);
+            };
+             if(z==3){
+                printf("Em A ");
+                ElementosRep(VB, dimB);
+            };
+            system("pause");
             break;
-    case 8: system("cls");
-            printf("Conjunto A ");
-            Vazio(VA, dimA);
-            printf("Conjunto B ");
+    case 8:system("cls");
+            printf("Deseja excluir os elementos repetidos do conjunto:\n[1]A e B\n[2]A\n[3]B\n[4]VOLTAR\n[OPÇÃO]=");
+            scanf("%d", &z);
+            if(z==1){
+                Repetidos(VA, &dimA);
+                Repetidos(VB, &dimB);
+                printf("Concluido!\n");
+            };
+            if(z==2){
+                Repetidos(VA, &dimA);
+                printf("Concluido!\n");
+            };
+            if(z==3){
+                Repetidos(VB, &dimB);
+                printf("Concluido!\n");
+            };
+            system("pause");
+            break;
+    case 9: system("cls");
+            printf("Deseja checar o conjunto:\n[1]A e B\n[2]A\n[3]B\n[4]VOLTAR\n[OPÇÃO]=");
+            scanf("%d", &z);
+            system("cls");
+            if(z==1){
+                printf("Conjunto A:");
+                Vazio(VA, dimA);
+                printf("Conjunto B:");
             Vazio(VB, dimB);
-            printf("Conjunto C ");
-            Vazio(VC, dimC);
+            };
+            if(z==2){
+                printf("Conjunto A:");
+                Vazio(VA, dimA);
+            };
+            if(z==3){
+                printf("Conjunto B:");
+                Vazio(VB, dimB);
+            };
+            system("pause");
             break;
     case 10:system("cls");
-            printf("Conjunto A: ");
-            Visualizar(VA,dimA);
-            printf("\nConjunto B: ");
-            Visualizar(VB, dimB);
-            printf("\nConjunto C: ");
-            Visualizar(VC, dimC);
+            printf("Deseja visualizar o conjunto:\n[1]A e B\n[2]A\n[3]B\n[4]Último conjunto resultante\n[5]VOLTAR\n[OPÇÃO]=");
+            scanf("%d", &z);
+            system("cls");
+            if(z==1){
+                printf("Conjunto A:\n");
+                Visualizar(VA,dimA);
+                printf("\nConjunto B:\n");
+                Visualizar(VB, dimB);
+            }
+            if(z==2){
+                printf("Conjunto A:\n");
+                Visualizar(VA,dimA);
+            };
+            if(z==3){
+                printf("\nConjunto B:\n");
+                Visualizar(VB, dimB);
+            }
+            if(z==4){
+                printf("\nConjunto resultante:\n");
+                Visualizar(VC, dimC);
+            }
+            system("pause");
+            break;
+    case 11: printf("Deseja encerrar o programa?[S/N]\n[OPÇÃO]=");
+            do{
+            fflush(stdin);
+            scanf("%c", &ch);
+            fflush(stdin);
+            }while(ch!='S' && ch!='N');
             break;
     }
+    switch(x){
+    case 1: system("cls");
+            printf("[ENTRE 1 A 100]\n\n Insira o tamanho de A: ");
+            Dimensao(&dimA);
+            printf("\n\n Insira o tamanho de B: ");
+            Dimensao(&dimB);
+            system("cls");
+            printf("Deseja:\n [1]Inserir os elementos manualmente\n [2]Gerar os elementos randomicamente\n[OPÇÃO]= ");
+            scanf("%d", &z);
+            if(z==1){
+                system("cls");
+                printf("Insira os elementos de A:");
+                Introduzir(VA, dimA);
+                system("cls");
+                printf("Insira os elementos de B:");
+                Introduzir(VB, dimB);
+            }
+             else if(z==2){
+                Random(VA, VB, dimA, dimB);
+            };
+            ShellSort(VA, dimA);
+            ShellSort(VB, dimB);
+            x=0;
+            break;
 
+    case 2: system("cls");
+            printf("[ENTRE 1 A 100]\n\n Insira o tamanho de A: ");
+            Dimensao(&dimA);
+            system("cls");
+            printf("Deseja:\n [1]Inserir os elementos manualmente\n [2]Gerar os elementos randomicamente\n[OPÇÃO]= ");
+            scanf("%d", &z);
+            if(z==1){
+                system("cls");
+                printf("Insira os elementos de A:");
+                Introduzir(VA, dimA);
+            }
+            else if(z==2){
+                Random(VA, VB, dimA, dimB);
+            };
+            ShellSort(VA, dimA);
+            x=0;
+            break;
+    case 3:system("cls");
+            printf("[ENTRE 1 A 100]\n\n Insira o tamanho de B: ");
+            Dimensao(&dimB);
+            system("cls");
+            printf("Deseja:\n [1]Inserir os elementos manualmente\n [2]Gerar os elementos randomicamente\n[OPÇÃO]= ");
+            scanf("%d", &z);
+            if(z==1){
+                system("cls");
+                printf("Insira os elementos de B:");
+                Introduzir(VB, dimB);
+            }
+            else if(z==2){
+                Random(VA, VB, dimA, dimB);
+            };
+            ShellSort(VB, dimB);
+            x=0;
+            break;
+     case 4: break;
+    }
+    }while(ch=='N');
+    return(0);
 }
