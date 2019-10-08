@@ -2,7 +2,7 @@
 /* Rafael Bassi Rosseto // 191251968 */
 /* Vinicius Polachini */
 
-/* Substituir getchar por system pause antes de enviar */
+/* Substituir getchar e system clear antes de enviar */
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /* Bibliotecas */
