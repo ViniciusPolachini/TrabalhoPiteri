@@ -2,6 +2,8 @@
 /* Rafael Bassi Rosseto // 191251968 */
 /* Vinicius Polachini */
 
+/* Substituir getchar por system pause antes de enviar */
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /* Bibliotecas */
 
@@ -94,11 +96,16 @@ void Random(int *ptr, int dim)
      int i;
      clock_t seed;
      seed = clock();
-     srand((unsigned) seed);
+     srand(seed);
      for (i = 0; i < dim; i++)
-         *(ptr + i)= rand();
+         *(ptr + i)= rand() % (999 + 1 - 0) + 0;
      return;
 }
+
+/*
+Como restringir o intervalo gerado pela função rand:
+rand() % (maior_valor + 1 - menor_valor) + menor_valor
+*/
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /* Exibir Elementos de um Array */
@@ -128,7 +135,7 @@ int main(void){
 
   do{
     system("clear");
-    printf("Seu array tem tamanho %d", dim);
+    printf("\nSeu array tem tamanho %d.\n", dim);
     printf("\nDigite [1] para gerar valores aleatórios para o array.");
     printf("\nDigite [2] para sair.\n\n");
     scanf("%d", &optA);
@@ -150,17 +157,17 @@ int main(void){
       switch(optB){
         case 1:
           QuickSort(array, 0, dim-1);
-          printf("\nO array foi organizado: \n");
+          printf("\nO array foi organizado: \n\n");
           Visualizar(array, dim);
-          printf("\nPressione ENTER para sair...\n");
+          printf("\nPressione ENTER para sair.\n");
           getchar();
           return 0;
 
         case 2:
           MergeSort(array, 0, dim-1);
-          printf("\nO array foi organizado em ordem crescente: \n");
+          printf("\nO array foi organizado: \n\n");
           Visualizar(array, dim);
-          printf("\nPressione ENTER para sair...\n");
+          printf("\nPressione ENTER para sair.\n");
           getchar();
           return 0;
 
