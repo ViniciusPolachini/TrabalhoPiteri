@@ -1,6 +1,6 @@
 /* TPP-02 ATP II */
 /* Rafael Bassi Rosseto // 191251968 */
-/* Vinicius Polachini Mayer Freitas de Jesus// 191251852 */
+/* Vinicius Polachini Mayer Freitas de Jesus // 191251852 */
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /* Bibliotecas */
