@@ -8,8 +8,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <locale.h>
 
-#define max 10
+#define max 100
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /* Merge Sort */
@@ -105,7 +106,7 @@ void Random(int *ptr, int dim)
 void Visualizar(int *ptr, int dim){
     int i;
     for(i=0; i<=dim-1; i++){
-        printf("[%d]=%d\n", i,*(ptr+i));
+        printf("Array[%d]=%d\n", i,*(ptr+i));
     }
 }
 
@@ -113,47 +114,63 @@ void Visualizar(int *ptr, int dim){
 /* Menu do Programa */
 
 int main(void){
-  int optA, optB, array[max];
+
+  setlocale(LC_ALL,"Portuguese");
+
+  int optA, optB, array[max], dim;
 
   do{
     system("clear");
     printf("\n ###### Trabalho pratico de programação 02 ######\n");
-    printf("\nDigite [1] para gerar um array de tamanho 10");
-    printf("\nDigite [2] para sair\n\n");
+    printf("\nInsira a dimensão do array: (Min = 1, Max = 100)\n");
+    scanf("%d", &dim);
+  }while(dim < 1 || dim > 100);
+
+  do{
+    system("clear");
+    printf("Seu array tem tamanho %d", dim);
+    printf("\nDigite [1] para gerar valores aleatórios para o array.");
+    printf("\nDigite [2] para sair.\n\n");
     scanf("%d", &optA);
-  } while ((!optA) || (!optB));
+  } while (optA < 1 || optA > 2);
 
   switch(optA){
     case 1:
-      system("clear");
-      printf("\nO seu array é:\n\n");
-      Random(array, max);
-      Visualizar(array, max);
-      printf("\n\n\n");
-      printf("Digite [1] para organizar o array utilizando Quick Sort");
-      printf("\nDigite [2] para Organizar o array utilizando Merge Sort\n\n");
-      scanf("%d", &optB);
+      do{
+        printf("\nO seu array é:\n\n");
+        Random(array, dim);
+        Visualizar(array, dim);
+        printf("\n\n\n");
+        printf("Digite [1] para organizar o array utilizando Quick Sort.\n");
+        printf("Digite [2] para Organizar o array utilizando Merge Sort.\n");
+        printf("Digite [3] para sair.\n\n");
+        scanf("%d", &optB);
+      }while(optB < 1 || optB > 3);
 
       switch(optB){
         case 1:
-          QuickSort(array, 0, max-1);
+          QuickSort(array, 0, dim-1);
           printf("\nO array foi organizado: \n");
-          Visualizar(array, max);
+          Visualizar(array, dim);
           printf("\nPressione ENTER para sair...\n");
           getchar();
           return 0;
 
         case 2:
-          MergeSort(array, 0, max-1);
-          printf("\nO array foi organizado: \n");
-          Visualizar(array, max);
+          MergeSort(array, 0, dim-1);
+          printf("\nO array foi organizado em ordem crescente: \n");
+          Visualizar(array, dim);
           printf("\nPressione ENTER para sair...\n");
           getchar();
           return 0;
+
+        case 3:
+          return (0);
       }
-  case 2:
-  getchar();
-  return 0;
+
+    case 2:
+    getchar();
+    return 0;
   }
 }
 
