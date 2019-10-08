@@ -1,8 +1,6 @@
 /* TPP-02 ATP II */
 /* Rafael Bassi Rosseto // 191251968 */
-/* Vinicius Polachini */
-
-/* Substituir getchar e system clear antes de enviar */
+/* Vinicius Polachini Mayer Freitas de Jesus// 191251852 */
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /* Bibliotecas */
@@ -11,6 +9,18 @@
 #include <stdio.h>
 #include <time.h>
 #include <locale.h>
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/* Definir limpeza de tela para Windows e Linux */
+
+#ifdef _WIN32
+#define CLEAR "cls"
+#else
+#define CLEAR "clear"
+#endif
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/* Maximo valor do Array */
 
 #define max 100
 
@@ -127,14 +137,14 @@ int main(void){
   int optA, optB, array[max], dim;
 
   do{
-    system("clear");
+    system(CLEAR);
     printf("\n ###### Trabalho pratico de programação 02 ######\n");
     printf("\nInsira a dimensão do array: (Min = 1, Max = 100)\n");
     scanf("%d", &dim);
   }while(dim < 1 || dim > 100);
 
   do{
-    system("clear");
+    system(CLEAR);
     printf("\nSeu array tem tamanho %d.\n", dim);
     printf("\nDigite [1] para gerar valores aleatórios para o array.");
     printf("\nDigite [2] para sair.\n\n");
