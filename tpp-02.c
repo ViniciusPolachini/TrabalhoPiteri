@@ -22,7 +22,7 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /* Maximo valor do Array */
 
-#define max 100
+#define MAX 1000
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /* Merge Sort */
@@ -108,13 +108,13 @@ void Random(int *ptr, int dim)
      seed = clock();
      srand(seed);
      for (i = 0; i < dim; i++)
-         *(ptr + i)= rand() % (999 + 1 - 0) + 0;
+         *(ptr + i)= rand() % (99999 + 1 - 0) + 0; /* [0, 99999] */
      return;
 }
 
 /*
-Como restringir o intervalo gerado pela função rand:
-rand() % (maior_valor + 1 - menor_valor) + menor_valor
+  Como restringir o intervalo gerado pela função rand:
+  rand() % (maior_valor + 1 - menor_valor) + menor_valor;
 */
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -134,14 +134,15 @@ int main(void){
 
   setlocale(LC_ALL,"Portuguese");
 
-  int optA, optB, array[max], dim;
+  int optA, optB, array[MAX], dim;
+  char ch;
 
   do{
     system(CLEAR);
     printf("\n ###### Trabalho pratico de programação 02 ######\n");
-    printf("\nInsira a dimensão do array: (Min = 1, Max = 100)\n");
+    printf("\nInsira a dimensão do array: (MIN = 1, MAX = 1000)\n");
     scanf("%d", &dim);
-  }while(dim < 1 || dim > 100);
+  }while(dim < 1 || dim > MAX);
 
   do{
     system(CLEAR);
@@ -169,16 +170,16 @@ int main(void){
           QuickSort(array, 0, dim-1);
           printf("\nO array foi organizado: \n\n");
           Visualizar(array, dim);
-          printf("\nPressione ENTER para sair.\n");
-          getchar();
+          printf("\nPressione ENTER para sair.\n\n");
+          system("pause");
           return 0;
 
         case 2:
           MergeSort(array, 0, dim-1);
           printf("\nO array foi organizado: \n\n");
           Visualizar(array, dim);
-          printf("\nPressione ENTER para sair.\n");
-          getchar();
+          printf("\nPressione ENTER para sair.\n\n");
+          system("pause");
           return 0;
 
         case 3:
@@ -186,8 +187,7 @@ int main(void){
       }
 
     case 2:
-    getchar();
-    return 0;
+      return 0;
   }
 }
 
