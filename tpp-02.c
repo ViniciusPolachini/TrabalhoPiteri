@@ -171,7 +171,8 @@ int main(void){
           printf("\nO array foi organizado: \n\n");
           Visualizar(array, dim);
           printf("\nPressione ENTER para sair.\n\n");
-          system("pause");
+          getchar();
+          getchar();
           return 0;
 
         case 2:
@@ -179,7 +180,8 @@ int main(void){
           printf("\nO array foi organizado: \n\n");
           Visualizar(array, dim);
           printf("\nPressione ENTER para sair.\n\n");
-          system("pause");
+          getchar();
+          getchar();
           return 0;
 
         case 3:
