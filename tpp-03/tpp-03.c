@@ -44,11 +44,8 @@ void matriz_impar(int ordem){
         }
 
         else{
-            if (j == ordem)
-                j = 0;
-
-            if (i < 0)
-                i = ordem - 1;
+            if (j == ordem) j = 0;
+            if (i < 0) i = ordem - 1;
         }
 
         if (matriz[i][j]){
