@@ -138,38 +138,38 @@ void matriz_par(int ordem){
                 i++;
             }
         }
-            else if(i-1>=0){
-                if(matriz[i-1][0]==0){
-                   j=0;
-                   i--;
-                }
-                else{
-                    i++;
-                }
-            } 
-                else if(j+1<aux2){
-                    if(matriz[aux2-1][j+1]==0){
-                        j++;
-                        i=aux2-1;
-                    }
-                        else{
-                            i++;
-                        }
-                }
-                    else{
-                         if(matriz[aux2-1][0]==0){
-                             j=0;
-                             i=aux2-1;
-                        }
-                            else{
-                                i++;
-                            }
-                    }
+        else if(i-1>=0){
+            if(matriz[i-1][0]==0){
+                j=0;
+                i--;
+            }
+            else{
+                i++;
+            }
+        }
+        else if(j+1<aux2){
+            if(matriz[aux2-1][j+1]==0){
+                j++;
+                i=aux2-1;
+            }
+            else{
+                i++;
+            }
+        }
+        else{
+            if(matriz[aux2-1][0]==0){
+                j=0;
+                i=aux2-1;
+            }
+            else{
+                i++;
+            }
+        }
     }
 
     aux+=(ordem*ordem)/4; i=ordem/2; j+=aux2;
 
-     while(num<=aux){
+    while(num<=aux){
         matriz[i][j]=num;
         num++;
         if(i-1>=aux2 && j+1<ordem){
@@ -181,38 +181,38 @@ void matriz_par(int ordem){
                 i++;
             }
         }
-            else if(i-1>=aux2){
-                if(matriz[i-1][aux2]==0){
-                   j=aux2;
-                   i--;
-                }
-                else{
-                    i++;
-                }
-            } 
-                else if(j+1<ordem){
-                    if(matriz[ordem-1][j+1]==0){
-                        j++;
-                        i=ordem-1;
-                    }
-                        else{
-                            i++;
-                        }
-                }
-                    else{
-                         if(matriz[ordem-1][aux2]==0){
-                             j=aux2;
-                             i=ordem-1;
-                        }
-                            else{
-                                i++;
-                            }
-                    }
+        else if(i-1>=aux2){
+            if(matriz[i-1][aux2]==0){
+                j=aux2;
+                i--;
+            }
+            else{
+                i++;
+            }
+        }
+        else if(j+1<ordem){
+            if(matriz[ordem-1][j+1]==0){
+                j++;
+                i=ordem-1;
+            }
+            else{
+                i++;
+            }
+        }
+        else{
+            if(matriz[ordem-1][aux2]==0){
+                j=aux2;
+                i=ordem-1;
+            }
+            else{
+                i++;
+            }
+        }
     }
-   
+
     aux+=(ordem*ordem)/4; i=0;
 
-     while(num<=aux){
+    while(num<=aux){
         matriz[i][j]=num;
         num++;
         if(i-1>=0 && j+1<ordem){
@@ -224,38 +224,38 @@ void matriz_par(int ordem){
                 i++;
             }
         }
-            else if(i-1>=0){
-                if(matriz[i-1][aux2]==0){
-                   j=aux2;
-                   i--;
-                }
-                else{
-                    i++;
-                }
-            } 
-                else if(j+1<ordem){
-                    if(matriz[aux2-1][j+1]==0){
-                        j++;
-                        i=aux2-1;
-                    }
-                        else{
-                            i++;
-                        }
-                }
-                    else{
-                         if(matriz[aux2-1][aux2]==0){
-                             j=aux2;
-                             i=aux2-1;
-                        }
-                            else{
-                                i++;
-                            }
-                    }
+        else if(i-1>=0){
+            if(matriz[i-1][aux2]==0){
+                j=aux2;
+                i--;
+            }
+            else{
+                i++;
+            }
+        } 
+        else if(j+1<ordem){
+            if(matriz[aux2-1][j+1]==0){
+                j++;
+                i=aux2-1;
+            }
+            else{
+                i++;
+            }
+        }
+        else{
+                if(matriz[aux2-1][aux2]==0){
+                    j=aux2;
+                    i=aux2-1;
+            }
+            else{
+                i++;
+            }
+        }
     }
 
     aux+=(ordem*ordem)/4; i=ordem/2; j=ordem/4;
 
-     while(num<=aux){
+    while(num<=aux){
         matriz[i][j]=num;
         num++;
         if(i-1>=aux2 && j+1<aux2){
@@ -267,47 +267,47 @@ void matriz_par(int ordem){
                 i++;
             }
         }
-            else if(i-1>=aux2){
-                if(matriz[i-1][0]==0){
-                   j=0;
-                   i--;
-                }
-                else{
-                    i++;
-                }
-            } 
-                else if(j+1<aux2){
-                    if(matriz[ordem-1][j+1]==0){
-                        j++;
-                        i=ordem-1;
-                    }
-                        else{
-                            i++;
-                        }
-                }
-                    else{
-                         if(matriz[ordem-1][0]==0){
-                             j=0;
-                             i=ordem-1;
-                        }
-                            else{
-                                i++;
-                            }
-                    }
+        else if(i-1>=aux2){
+            if(matriz[i-1][0]==0){
+                j=0;
+                i--;
+            }
+            else{
+                i++;
+            }
+        }
+        else if(j+1<aux2){
+            if(matriz[ordem-1][j+1]==0){
+                j++;
+                i=ordem-1;
+            }
+            else{
+                i++;
+            }
+        }
+        else{
+                if(matriz[ordem-1][0]==0){
+                    j=0;
+                    i=ordem-1;
+            }
+            else{
+                i++;
+            }
+        }
     }
 
-       for(i=0; i<aux2; i++)
+    for(i=0; i<aux2; i++)
         for(j=0; j<aux2/2; j++){
             aux3=matriz[i][j];
             matriz[i][j]=matriz[i+aux2][j];
             matriz[i+aux2][j]=aux3;
         }
 
-        aux3=matriz[(aux2/2)][(aux2/2)];
-        matriz[(aux2/2)][(aux2/2)]=matriz[(aux2/2)+aux2][(aux2/2)];
-        matriz[(aux2/2)+aux2][(aux2/2)]=aux3;
+    aux3=matriz[(aux2/2)][(aux2/2)];
+    matriz[(aux2/2)][(aux2/2)]=matriz[(aux2/2)+aux2][(aux2/2)];
+    matriz[(aux2/2)+aux2][(aux2/2)]=aux3;
 
-     imprime_matriz(&matriz[0][0], ordem);
+    imprime_matriz(&matriz[0][0], ordem);
 }
 
 
