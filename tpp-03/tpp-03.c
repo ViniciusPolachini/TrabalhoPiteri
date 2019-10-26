@@ -343,7 +343,7 @@ int main(void){
         printf("\n ###### Trabalho pratico de programação 03 ######\n");
         printf("\nInsira a ordem da matriz mágica à ser gerada:\n");
         scanf("%d", &ordem);
-    }while(ordem < 3 || ordem > 12);
+    }while(ordem < 3 || ordem > 14);
 
     if(ordem % 2 != 0){
         matriz_impar(ordem);
