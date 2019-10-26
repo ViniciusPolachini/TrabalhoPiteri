@@ -59,7 +59,7 @@ void matriz_impar(int ordem){
         j++; i--;
     }
 
-    imprime_matriz(matriz, ordem);
+    imprime_matriz(&matriz[0][0], ordem);
 
 }
 
@@ -107,7 +107,7 @@ void matriz_mult_4(int ordem){
         }
     }
 
-    imprime_matriz(matriz, ordem);
+    imprime_matriz(&matriz[0][0], ordem);
 
 }
 
@@ -116,14 +116,16 @@ void matriz_mult_4(int ordem){
 /* Gerar matriz mágica de ordem par */
 
 void matriz_par(int ordem){
-     int matriz[ordem][ordem],aux=(ordem*ordem)/4,sup=ordem, aux2=ordem/2, aux3 ,i=0, j=ordem/4, k, l, num=1;
+     int matriz[ordem][ordem],aux=(ordem*ordem)/4, aux2=ordem/2, aux3, i, j, num=1;
     
-     for(k = 0; k < ordem; k++){
-        for (l = 0; l < ordem; l++){
-            matriz[k][l] = 0;
+     for(i = 0; i < ordem; i++){
+        for (j = 0; j < ordem; j++){
+            matriz[i][j] = 0;
         }
     }
 
+    i=0; j=ordem/4;
+    
     while(num<=aux){
         matriz[i][j]=num;
         num++;
@@ -164,6 +166,7 @@ void matriz_par(int ordem){
                             }
                     }
     }
+
     aux+=(ordem*ordem)/4; i=ordem/2; j+=aux2;
 
      while(num<=aux){
@@ -206,6 +209,7 @@ void matriz_par(int ordem){
                             }
                     }
     }
+   
     aux+=(ordem*ordem)/4; i=0;
 
      while(num<=aux){
@@ -303,14 +307,7 @@ void matriz_par(int ordem){
         matriz[(aux2/2)][(aux2/2)]=matriz[(aux2/2)+aux2][(aux2/2)];
         matriz[(aux2/2)+aux2][(aux2/2)]=aux3;
 
-    printf("\n\nMatriz magica de ordem =%d:\n\n", ordem);
-    for (k = 0; k < ordem; k++){
-        for (l = 0; l < ordem; l++){
-            printf("%5d ", matriz[k][l]);
-        }
-        printf("\n");
-    }
-     printf("\n\nSoma de cada linha/coluna = %d\n\n", ordem * (ordem * ordem + 1) / 2);
+     imprime_matriz(&matriz[0][0], ordem);
 }
 
 
