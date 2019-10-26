@@ -2,12 +2,14 @@
 /* Rafael Bassi Rosseto // 191251968 */
 /* Vinicius Polachini Mayer Freitas de Jesus // 191251852 */
 
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /* Bibliotecas */
 
 #include <stdio.h> 
 #include <stdlib.h>
 #include <locale.h>
+
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /* Definir limpeza de tela para Windows e Linux */
@@ -17,6 +19,7 @@
 #else
 #define CLEAR "clear"
 #endif
+
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /* Gerar matriz mágica de ordem ímpar */
@@ -41,11 +44,8 @@ void matriz_impar(int ordem){
         }
 
         else{
-            if (j == ordem)
-                j = 0;
-
-            if (i < 0)
-                i = ordem - 1;
+            if (j == ordem) j = 0;
+            if (i < 0) i = ordem - 1;
         }
 
         if (matriz[i][j]){
@@ -59,15 +59,10 @@ void matriz_impar(int ordem){
         j++; i--;
     }
 
-    printf("\n\nMatriz magica de ordem =%d:\n\n", ordem);
-    for (i = 0; i < ordem; i++){
-        for (j = 0; j < ordem; j++){
-            printf("%5d ", matriz[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n\nSoma de cada linha/coluna = %d\n\n", ordem * (ordem * ordem + 1) / 2);
+    imprime_matriz(matriz, ordem);
+
 }
+
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /* Gerar matriz mágica de ordem multipla de 4 */
@@ -112,20 +107,16 @@ void matriz_mult_4(int ordem){
         }
     }
 
-    printf("\n\nMatriz magica de ordem =%d:\n\n", ordem);
-    for (i = 0; i < ordem; i++){
-        for (j = 0; j < ordem; j++){
-            printf("%5d ", matriz[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n\nSoma de cada linha/coluna = %d\n\n", ordem * (ordem * ordem + 1) / 2);
+    imprime_matriz(matriz, ordem);
+
 }
+
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /* Gerar matriz mágica de ordem par */
 
 void matriz_par(int ordem){
-    int matriz[ordem][ordem],aux=(ordem*ordem)/4,sup=ordem, aux2=ordem/2, aux3 ,i=0, j=ordem/4, k, l, num=1;
+     int matriz[ordem][ordem],aux=(ordem*ordem)/4,sup=ordem, aux2=ordem/2, aux3 ,i=0, j=ordem/4, k, l, num=1;
     
      for(k = 0; k < ordem; k++){
         for (l = 0; l < ordem; l++){
@@ -322,10 +313,28 @@ void matriz_par(int ordem){
      printf("\n\nSoma de cada linha/coluna = %d\n\n", ordem * (ordem * ordem + 1) / 2);
 }
 
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/* Imprimir Matriz */
+
+void imprime_matriz(int *matriz, int ordem){
+
+    printf("\n\nMatriz magica de ordem = %d:\n\n", ordem);
+    for (int i = 0; i < ordem; i++){
+        for (int j = 0; j < ordem; j++){
+            printf("%5d ", *(matriz + i*ordem + j));
+        }
+        printf("\n");
+    }
+    printf("\n\nSoma de cada linha/coluna = %d\n\n", ordem * (ordem * ordem + 1) / 2);
+}
+
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /* Menu do Programa */
 
-int main (void){
+int main(void){
 
     setlocale(LC_ALL,"Portuguese");
 
@@ -337,10 +346,9 @@ int main (void){
         printf("\n ###### Trabalho pratico de programação 03 ######\n");
         printf("\nInsira a ordem da matriz mágica à ser gerada:\n");
         scanf("%d", &ordem);
-    }while(ordem < 1 || ordem > 32);
+    }while(ordem < 3 || ordem > 12);
 
     if(ordem % 2 != 0){
-        system(CLEAR);
         matriz_impar(ordem);
         printf("\nPressione ENTER para sair.");
         getchar();
