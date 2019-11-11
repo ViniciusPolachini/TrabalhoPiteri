@@ -50,6 +50,7 @@ void posicionaPalavra(char **palavras, char *matriz){
     for(i=0; i<20; i++) p[i]=20;
     //Horizontal
         for(i=0; i<4; i++){
+            
             do{
                 aux=0;
                 Random(&palavra, 0, 20);
@@ -59,13 +60,23 @@ void posicionaPalavra(char **palavras, char *matriz){
             }while(aux);
             p[k]=palavra;
             k++;
+
             for(NL=0; *(palavras[palavra]+NL)!='\0';NL++);
-            Random(&coluna,0,19-NL);
-            Random(&linha,0,19);
-            printf("\nColuna:%d\nLinha:%d\nPalavara:%d\n\n", coluna, linha, palavra);
-            for(j=0; j<NL; j++){
-                *(matriz+linha*20+coluna+j)=*(palavras[palavra]+j);
-            }
+            do{
+                aux=0;
+                Random(&coluna,0,19-NL);
+                Random(&linha,0,19);
+                printf("\nColuna:%d\nLinha:%d\nPalavara:%d\n\n", coluna, linha, palavra);
+                for(j=0; j<NL; j++){
+                    if(*(matriz+linha*20+coluna+j)==32 || *(matriz+linha*20+coluna+j)==*(palavras[palavra]+j)){
+                        *(matriz+linha*20+coluna+j)=*(palavras[palavra]+j);
+                    }
+                    else{
+                        aux=1;
+                        break;
+                    }
+                }
+            }while(aux);
         }
     //vertical
 
