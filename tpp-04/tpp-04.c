@@ -22,20 +22,6 @@
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-/*void atualizaPalavras(char **palavras, int palavra, int x){
-    int i, j;
-    for (i=palavra; i<x; i++){
-        for(j=0; *(palavras[i+1]+j)!='\0'; j++){
-            *(palavras[i]+j) = *(palavras[i+1]+j);
-            printf("%d|%c\n", j,*(palavras[i]+j));
-        }
-        *(palavras[i]+j+1)='\0';
-       printf("\n|%d|\n\n", i);
-    }
-}*/
-
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
 void Random(int *num, int ini, int fim){
     clock_t seed;
     seed = clock();
@@ -45,8 +31,8 @@ void Random(int *num, int ini, int fim){
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-void posicionaPalavra(char **palavras, char *matriz){
-    int i, j, NL,k=0, p[19], coluna, linha, palavra, aux;
+void posicionarpalavra(char **palavras, char *matriz){
+    int i, j, NL, k=0, p[19], coluna, linha, palavra, aux;
     for(i=0; i<20; i++) p[i]=20;
     //Horizontal
         for(i=0; i<4; i++){
@@ -85,6 +71,21 @@ void posicionaPalavra(char **palavras, char *matriz){
     //diagonal secundária
 }
 
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+void FisherYates(char **palavras){
+   
+    clock_t seed;
+    seed = clock();
+    srand(seed);
+
+   for(int i = 20-1; i > 0; i--){
+        int j = rand() % (i+1);
+        char *aux = palavras[i];
+        palavras[i] = palavras[j];
+        palavras[j] = aux;
+   }
+}
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -129,9 +130,11 @@ int main(void){
     "EDIMBURGO", "FRANKFURT", "KIEV", "LIVERPOOL", "LEEDS", "MAASTRICHT", "MADRID", "MANCHESTER",
     "LISBOA", "LONDRES", "PALERMO", "PARIS", "SERVILHA", "SHEFFIED", "TURIM"};
 
+    FisherYates(palavras);
+
     char matriz[MAX][MAX];
     inicializarmatriz(&matriz[0][0]);
-    posicionaPalavra(palavras, &matriz[0][0]);
+    posicionarpalavra(palavras, &matriz[0][0]);
     gerarmatriz(&matriz[0][0]);
     imprimirmatriz(&matriz[0][0]);
     return 0;
