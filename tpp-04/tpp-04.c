@@ -20,6 +20,8 @@
 
 #define MAX 20
 
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
 /*void atualizaPalavras(char **palavras, int palavra, int x){
     int i, j;
     for (i=palavra; i<x; i++){
@@ -32,12 +34,16 @@
     }
 }*/
 
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
 void Random(int *num, int ini, int fim){
     clock_t seed;
     seed = clock();
     srand(seed);
     *(num) = rand() % (fim + 1 - ini) + ini;
 }
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 void posicionaPalavra(char **palavras, char *matriz){
     int i, j, NL,k=0, p[19], coluna, linha, palavra, aux;
