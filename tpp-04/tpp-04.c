@@ -22,40 +22,28 @@
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-void Random(int *num, int ini, int fim){
+void Random(int *num, int fim){
     clock_t seed;
     seed = clock();
     srand(seed);
-    *(num) = rand() % (fim + 1 - ini) + ini;
+    *(num) = rand() % (fim+1);
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 void posicionarpalavra(char **palavras, char *matriz){
-    int i, j, NL, k=0, p[19], coluna, linha, palavra, aux;
-    for(i=0; i<20; i++) p[i]=20;
+    int i, j, NL, coluna, linha, aux;
     //Horizontal
         for(i=0; i<4; i++){
-            
-            do{
-                aux=0;
-                Random(&palavra, 0, 20);
-                for(j=0; j<k; j++){
-                    if(palavra==p[j]) aux=1;
-                }
-            }while(aux);
-            p[k]=palavra;
-            k++;
 
-            for(NL=0; *(palavras[palavra]+NL)!='\0';NL++);
+            for(NL=0; *(palavras[i]+NL)!='\0';NL++);
             do{
                 aux=0;
-                Random(&coluna,0,19-NL);
-                Random(&linha,0,19);
-                printf("\nColuna:%d\nLinha:%d\nPalavara:%d\n\n", coluna, linha, palavra);
-                for(j=0; j<NL; j++){
-                    if(*(matriz+linha*20+coluna+j)==32 || *(matriz+linha*20+coluna+j)==*(palavras[palavra]+j)){
-                        *(matriz+linha*20+coluna+j)=*(palavras[palavra]+j);
+                Random(&coluna,19-NL);
+                Random(&linha,19);
+                for(j=0; j<NL; j++){ 
+                    if(*(matriz+linha*20+coluna+j) == 45 || *(matriz+linha*20+coluna+j)==*(palavras[i]+j)){
+                        *(matriz+linha*20+coluna+j)=*(palavras[i]+j);
                     }
                     else{
                         aux=1;
@@ -92,7 +80,7 @@ void FisherYates(char **palavras){
 void inicializarmatriz(char *matriz){
 
     for(int i = 0; i <= (MAX*MAX); i++){
-        *(matriz + i) = 32;
+        *(matriz + i) = 45;
     }
 
 }
@@ -105,7 +93,7 @@ void gerarmatriz(char *matriz){
     seed = clock();
     srand(seed);
     for(int i = 0; i <= (MAX*MAX); i++){
-        if(*(matriz + i) == 32){
+        if(*(matriz + i) == 45){
            *(matriz + i) = rand() % (90 + 1 - 65) + 65;
         }
     }
@@ -115,7 +103,6 @@ void gerarmatriz(char *matriz){
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 void imprimirmatriz(char *matriz){
-
     for(int i = 1; i <= (MAX*MAX); i++){
         printf("%3c", *(matriz + i));
         if(i % 20 == 0) printf("\n");
@@ -135,6 +122,8 @@ int main(void){
     char matriz[MAX][MAX];
     inicializarmatriz(&matriz[0][0]);
     posicionarpalavra(palavras, &matriz[0][0]);
+    imprimirmatriz(&matriz[0][0]);
+    printf("\n\n\n");
     gerarmatriz(&matriz[0][0]);
     imprimirmatriz(&matriz[0][0]);
     return 0;
