@@ -42,7 +42,6 @@ void posicionarpalavra(char **palavras, char *matriz){
                 aux=0;
                 Random(&coluna,0,19-NL);
                 Random(&linha,0,19);
-                printf("|%d|%d|%s|\n", linha, coluna, (palavras[i]));
                 for(j=0; j<NL; j++){ 
                     if(*(matriz+linha*20+coluna+j+1) != 45 && *(matriz+linha*20+coluna+j+1)!=*(palavras[i]+j)){
                        aux=1;
@@ -63,7 +62,6 @@ void posicionarpalavra(char **palavras, char *matriz){
                 aux=0;
                 Random(&coluna,0,19);
                 Random(&linha,0,19-NL);
-                printf("|%d|%d|%s|\n", linha, coluna, (palavras[i]));
                 for(j=0; j<NL; j++){ 
                     if(*(matriz+(linha+j)*20+coluna+1) != 45 && *(matriz+(linha+j)*20+coluna+1)!=*(palavras[i]+j)){
                        aux=1;
@@ -163,7 +161,7 @@ void gerarmatriz(char *matriz){
 
 void imprimirmatriz(char *matriz){
     for(int i = 1; i <= (MAX*MAX); i++){
-        printf("%3c\e[0;37m", *(matriz + i));
+        printf("%3c", *(matriz + i));
         if(i % 20 == 0) printf("\n");
     }
 
@@ -171,10 +169,10 @@ void imprimirmatriz(char *matriz){
 void imprimirmatrizcolorida(char *matriz){
     for(int i = 1; i <= (MAX*MAX); i++){
         if(*(matriz+i)!=45){
-            printf("%3c\x1b[31m" , *(matriz + i));
+            printf("\x1b[31m%3c\e[0;37m" , *(matriz + i));
         }
         else{
-            printf("%3c\e[0;37m", *(matriz + i));
+            printf("%3c", *(matriz + i));
         }
         if(i % 20 == 0) printf("\n");
     }
