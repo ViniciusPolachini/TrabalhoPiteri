@@ -172,7 +172,7 @@ void imprimirmatrizcolorida(char *matriz){
             printf("\x1b[31m%3c\e[0;37m" , *(matriz + i));
         }
         else{
-            printf("%3c", *(matriz + i));
+            printf("\e[0;37m%3c", *(matriz + i));
         }
         if(i % 20 == 0) printf("\n");
     }
