@@ -35,11 +35,11 @@ void randomizar(int *num, int ini, int fim){
 
 void posicionarPalavra(char **palavras, char *matriz){
     
-    int i, j, NL, coluna, linha, aux, verificador = 0;
+    int verificador = 0;
 
     do{
         
-        int cont = 0;
+        int i, j, NL, coluna, linha, aux, cont = 0;
 
         for(int i = 0; i <= (MAX*MAX); i++){
             *(matriz + i) = 45;
@@ -61,7 +61,10 @@ void posicionarPalavra(char **palavras, char *matriz){
                     cont++;
                     if(cont > 350) break;
                 }
+                if(cont > 350) break;
+
             }while(aux);
+            if(cont > 350) break;
 
             for(j=0; j<NL; j++){
                 *(matriz+linha*20+coluna+j+1)=*(palavras[i]+j);
@@ -84,7 +87,10 @@ void posicionarPalavra(char **palavras, char *matriz){
                     cont++;
                     if(cont > 350) break;
                 }
+                if(cont > 350) break;
+
             }while(aux);
+            if(cont > 350) break;
 
             for(j=0; j<NL; j++){
                 *(matriz+(linha+j)*20+coluna+1)=*(palavras[i]+j);
@@ -107,7 +113,10 @@ void posicionarPalavra(char **palavras, char *matriz){
                     cont++;
                     if(cont > 350) break;
                 }
+                if(cont > 350) break;
+
             }while(aux);
+            if(cont > 350) break;
 
             for(j=0; j<NL; j++){
                 *(matriz+(linha+j)*20+coluna+j+1)=*(palavras[i]+j);
@@ -129,13 +138,16 @@ void posicionarPalavra(char **palavras, char *matriz){
                     }
                     cont++;
                     if(cont > 350) break;
+                    verificador = 1;
                 }
+                if(cont > 350) break;
+
             }while(aux);
+            if(cont > 350) break;
 
             for(j=0; j<NL; j++){
                 *(matriz+(linha+j)*20+coluna-j+1)=*(palavras[i]+j);
             }
-            verificador = 1;
         }
 
     }while(!verificador);
@@ -221,7 +233,7 @@ int main(void){
 
     char matriz_resposta[MAX][MAX];
     
-    for(int i=0; i<MAX; i++){
+    for(int i=0; i<=MAX; i++){
         for(int j=0; j<MAX; j++){
             matriz_resposta[i][j] = matriz[i][j];
         }
