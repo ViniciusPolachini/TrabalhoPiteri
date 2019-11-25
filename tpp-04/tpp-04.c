@@ -38,7 +38,12 @@ void posicionarPalavra(char **palavras, char *matriz){
     int i, j, NL, coluna, linha, aux, verificador = 0;
 
     do{
+        
         int cont = 0;
+
+        for(int i = 0; i <= (MAX*MAX); i++){
+            *(matriz + i) = 45;
+        }
 
         //Horizontal
         for(i=0; i<8; i++){
@@ -155,16 +160,6 @@ void fisherYates(char **palavras){
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-void inicializarMatriz(char *matriz){
-
-    for(int i = 0; i <= (MAX*MAX); i++){
-        *(matriz + i) = 45;
-    }
-
-}
-
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
 void gerarMatriz(char *matriz){
 
     for(int i = 0; i <= (MAX*MAX); i++){
@@ -215,14 +210,12 @@ int main(void){
     puts("\n TPP-04 - Caça Palavras");
     puts("\n Palavras para serem encontradas:");
     for(int i=0; i<20; i++){
-        printf("\n \x1b[1;32m%s\e[0;37m", *(palavras+i));
+        printf("\n \033[1;32m%s\e[0;37m", *(palavras+i));
     }
 
     fisherYates(palavras);
 
     char matriz[MAX][MAX];
-
-    inicializarMatriz(&matriz[0][0]);
 
     posicionarPalavra(palavras, &matriz[0][0]);
 
