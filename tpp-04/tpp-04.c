@@ -26,7 +26,7 @@ void randomizar(int *num, int ini, int fim){
     clock_t seed;
     seed = clock();
     srand(seed);
-    
+
     *(num) = rand() % (fim+1-ini)+ini;
 
 }
@@ -51,10 +51,10 @@ void posicionarPalavra(char **palavras, char *matriz){
                 for(j=0; j<NL; j++){ 
                     if(*(matriz+linha*20+coluna+j+1) != 45 && *(matriz+linha*20+coluna+j+1)!=*(palavras[i]+j)){
                         aux=1;
-                        cont++;
-                        if(cont > 350) break;
                         break;
                     }
+                    cont++;
+                    if(cont > 350) break;
                 }
             }while(aux);
 
@@ -74,10 +74,10 @@ void posicionarPalavra(char **palavras, char *matriz){
                 for(j=0; j<NL; j++){ 
                     if(*(matriz+(linha+j)*20+coluna+1) != 45 && *(matriz+(linha+j)*20+coluna+1)!=*(palavras[i]+j)){
                         aux=1;
-                        cont++;
-                        if(cont > 350) break;
                         break;
                     }
+                    cont++;
+                    if(cont > 350) break;
                 }
             }while(aux);
 
@@ -97,10 +97,10 @@ void posicionarPalavra(char **palavras, char *matriz){
                 for(j=0; j<NL; j++){ 
                     if(*(matriz+(linha+j)*20+coluna+j+1) != 45 && *(matriz+(linha+j)*20+coluna+j+1)!=*(palavras[i]+j)){
                         aux=1;
-                        cont++;
-                        if(cont > 350) break;
                         break;
                     }
+                    cont++;
+                    if(cont > 350) break;
                 }
             }while(aux);
 
@@ -120,10 +120,10 @@ void posicionarPalavra(char **palavras, char *matriz){
                 for(j=0; j<NL; j++){ 
                     if(*(matriz+(linha+j)*20+coluna-j+1) != 45 && *(matriz+(linha+j)*20+coluna-j+1)!=*(palavras[i]+j)){
                         aux=1;
-                        cont++;
-                        if(cont > 350) break;
                         break;
                     }
+                    cont++;
+                    if(cont > 350) break;
                 }
             }while(aux);
 
