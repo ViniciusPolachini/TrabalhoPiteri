@@ -228,19 +228,18 @@ int main(void){
 
     gerarMatriz(&matriz[0][0]);
 
-    puts("\n\n Precione [ENTER] para ver o caça paralvras.\n");
+    puts("\n\n Precione [ENTER] para ver o caça paralvras.");
     getchar();
 
     imprimirMatrizColorida(&matriz[0][0]);
 
-    puts("\n\n Precione [ENTER] para ver a resolução do caça paralvras.\n");
+    puts("\n Precione [ENTER] para ver a resolução do caça paralvras.");
     getchar();
 
     imprimirMatrizColorida(&matriz_resposta[0][0]);
 
-    puts("\n\n Precione [ENTER] para finalizar o programa.\n");
+    puts("\n Precione [ENTER] para finalizar o programa.");
     getchar();
-
 
     return 0;
 }
