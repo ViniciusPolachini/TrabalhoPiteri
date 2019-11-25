@@ -23,6 +23,10 @@
 
 void randomizar(int *num, int ini, int fim){
     
+    clock_t seed;
+    seed = clock();
+    srand(seed);
+    
     *(num) = rand() % (fim+1-ini)+ini;
 
 }
@@ -137,6 +141,10 @@ void posicionarPalavra(char **palavras, char *matriz){
 
 void fisherYates(char **palavras){
 
+    clock_t seed;
+    seed = clock();
+    srand(seed);
+
     for(int i = 20-1; i > 0; i--){
         int j = rand() % (i+1);
         char *aux = palavras[i];
@@ -184,10 +192,10 @@ void imprimirMatrizColorida(char *matriz){
 
     for(int i = 1; i <= (MAX*MAX); i++){
         if(*(matriz+i)!=45){
-            printf("\x1b[1;32m%3c\e[0;37m" , *(matriz + i));
+            printf("\033[1;32m%3c\033[0m" , *(matriz + i));
         }
         else{
-            printf("\e[0;37m%3c\e[0;37m", *(matriz + i));
+            printf("\033[0;37m%3c\033[0m", *(matriz + i));
         }
         if(i % 20 == 0) printf("\n");
     }
