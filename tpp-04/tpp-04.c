@@ -5,13 +5,13 @@
  */
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-#define ANSI_COLOR_RED      "\x1b[31m"
-#define ANSI_COLOR_GRAY     "\e[0;37m"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
 
+#define MAX 20
 
 #ifdef _WIN32
 #define CLEAR "cls"
@@ -19,122 +19,135 @@
 #define CLEAR "clear"
 #endif
 
-#define MAX 20
-
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-void Random(int *num, int ini,int fim){
-    clock_t seed;
-    seed = clock();
-    srand(seed);
+void randomizar(int *num, int ini, int fim){
+    
     *(num) = rand() % (fim+1-ini)+ini;
+
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-void posicionarpalavra(char **palavras, char *matriz){
-    int i, j, NL, coluna, linha, aux;
-    //Horizontal
-        for(i=0; i<4; i++){
+void posicionarPalavra(char **palavras, char *matriz){
+    
+    int i, j, NL, coluna, linha, aux, verificador = 0;
+
+    do{
+        int cont = 0;
+
+        //Horizontal
+        for(i=0; i<8; i++){
 
             for(NL=0; *(palavras[i]+NL)!='\0';NL++);
             do{
                 aux=0;
-                Random(&coluna,0,19-NL);
-                Random(&linha,0,19);
+                randomizar(&coluna,0,19-NL);
+                randomizar(&linha,0,19);
                 for(j=0; j<NL; j++){ 
                     if(*(matriz+linha*20+coluna+j+1) != 45 && *(matriz+linha*20+coluna+j+1)!=*(palavras[i]+j)){
-                       aux=1;
+                        aux=1;
+                        cont++;
+                        if(cont > 350) break;
                         break;
                     }
                 }
             }while(aux);
-             for(j=0; j<NL; j++){
-              *(matriz+linha*20+coluna+j+1)=*(palavras[i]+j);
+
+            for(j=0; j<NL; j++){
+                *(matriz+linha*20+coluna+j+1)=*(palavras[i]+j);
             }
-                
         }
-    //vertical
-        for(; i<8; i++){
+
+        //vertical
+        for(i=8; i<16; i++){
 
             for(NL=0; *(palavras[i]+NL)!='\0';NL++);
             do{
                 aux=0;
-                Random(&coluna,0,19);
-                Random(&linha,0,19-NL);
+                randomizar(&coluna,0,19);
+                randomizar(&linha,0,19-NL);
                 for(j=0; j<NL; j++){ 
                     if(*(matriz+(linha+j)*20+coluna+1) != 45 && *(matriz+(linha+j)*20+coluna+1)!=*(palavras[i]+j)){
-                       aux=1;
+                        aux=1;
+                        cont++;
+                        if(cont > 350) break;
                         break;
                     }
                 }
             }while(aux);
-             for(j=0; j<NL; j++){
-              *(matriz+(linha+j)*20+coluna+1)=*(palavras[i]+j);
+
+            for(j=0; j<NL; j++){
+                *(matriz+(linha+j)*20+coluna+1)=*(palavras[i]+j);
             }
-                
         }
-    //diagonal principal
-        for(; i<10; i++){
+
+        //diagonal principal
+        for(i=16; i<18; i++){
 
             for(NL=0; *(palavras[i]+NL)!='\0';NL++);
             do{
                 aux=0;
-                Random(&coluna,0,20-NL);
-                Random(&linha,0,20-NL);
+                randomizar(&coluna,0,20-NL);
+                randomizar(&linha,0,20-NL);
                 for(j=0; j<NL; j++){ 
                     if(*(matriz+(linha+j)*20+coluna+j+1) != 45 && *(matriz+(linha+j)*20+coluna+j+1)!=*(palavras[i]+j)){
-                       aux=1;
+                        aux=1;
+                        cont++;
+                        if(cont > 350) break;
                         break;
                     }
                 }
             }while(aux);
-             for(j=0; j<NL; j++){
-              *(matriz+(linha+j)*20+coluna+j+1)=*(palavras[i]+j);
+
+            for(j=0; j<NL; j++){
+                *(matriz+(linha+j)*20+coluna+j+1)=*(palavras[i]+j);
             }
-                
         }
-    //diagonal secundária
-        for(; i<12; i++){
+
+        //diagonal secundária
+        for(i=18; i<20; i++){
 
             for(NL=0; *(palavras[i]+NL)!='\0';NL++);
             do{
                 aux=0;
-                Random(&coluna,NL-1,19);
-                Random(&linha,0,20-NL);
+                randomizar(&coluna,NL-1,19);
+                randomizar(&linha,0,20-NL);
                 for(j=0; j<NL; j++){ 
                     if(*(matriz+(linha+j)*20+coluna-j+1) != 45 && *(matriz+(linha+j)*20+coluna-j+1)!=*(palavras[i]+j)){
-                       aux=1;
+                        aux=1;
+                        cont++;
+                        if(cont > 350) break;
                         break;
                     }
                 }
             }while(aux);
-             for(j=0; j<NL; j++){
-              *(matriz+(linha+j)*20+coluna-j+1)=*(palavras[i]+j);
+
+            for(j=0; j<NL; j++){
+                *(matriz+(linha+j)*20+coluna-j+1)=*(palavras[i]+j);
             }
-                
+            verificador = 1;
         }
+
+    }while(!verificador);
+    
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-void FisherYates(char **palavras){
-   
-    clock_t seed;
-    seed = clock();
-    srand(seed);
+void fisherYates(char **palavras){
 
-   for(int i = 20-1; i > 0; i--){
+    for(int i = 20-1; i > 0; i--){
         int j = rand() % (i+1);
         char *aux = palavras[i];
         palavras[i] = palavras[j];
         palavras[j] = aux;
-   }
+    }
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-void inicializarmatriz(char *matriz){
+void inicializarMatriz(char *matriz){
 
     for(int i = 0; i <= (MAX*MAX); i++){
         *(matriz + i) = 45;
@@ -144,11 +157,8 @@ void inicializarmatriz(char *matriz){
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-void gerarmatriz(char *matriz){
+void gerarMatriz(char *matriz){
 
-    clock_t seed;
-    seed = clock();
-    srand(seed);
     for(int i = 0; i <= (MAX*MAX); i++){
         if(*(matriz + i) == 45){
            *(matriz + i) = rand() % (90 + 1 - 65) + 65;
@@ -159,20 +169,25 @@ void gerarmatriz(char *matriz){
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-void imprimirmatriz(char *matriz){
+void imprimirMatriz(char *matriz){
+
     for(int i = 1; i <= (MAX*MAX); i++){
         printf("%3c", *(matriz + i));
         if(i % 20 == 0) printf("\n");
     }
 
 }
-void imprimirmatrizcolorida(char *matriz){
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+void imprimirMatrizColorida(char *matriz){
+
     for(int i = 1; i <= (MAX*MAX); i++){
         if(*(matriz+i)!=45){
-            printf("\x1b[31m%3c\e[0;37m" , *(matriz + i));
+            printf("\x1b[1;32m%3c\e[0;37m" , *(matriz + i));
         }
         else{
-            printf("\e[0;37m%3c", *(matriz + i));
+            printf("\e[0;37m%3c\e[0;37m", *(matriz + i));
         }
         if(i % 20 == 0) printf("\n");
     }
@@ -182,19 +197,51 @@ void imprimirmatrizcolorida(char *matriz){
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 int main(void){
+
+    system(CLEAR);
+
     char *palavras[MAX] = {"BARCELONA", "BRATISLAVA", "CAMBRIDGE", "COPENHAGUE", "DUSSELDORF",
     "EDIMBURGO", "FRANKFURT", "KIEV", "LIVERPOOL", "LEEDS", "MAASTRICHT", "MADRID", "MANCHESTER",
-    "LISBOA", "LONDRES", "PALERMO", "PARIS", "SERVILHA", "SHEFFIED", "TURIM"};
+    "LISBOA", "LONDRES", "PALERMO", "PARIS", "SEVILHA", "SHEFFIED", "TURIM"}, palavras_rev[MAX];
 
-    FisherYates(palavras);
+    puts("\n TPP-04 - Caça Palavras");
+    puts("\n Palavras para serem encontradas:");
+    for(int i=0; i<20; i++){
+        printf("\n \x1b[1;32m%s\e[0;37m", *(palavras+i));
+    }
+
+    fisherYates(palavras);
 
     char matriz[MAX][MAX];
-    inicializarmatriz(&matriz[0][0]);
-    posicionarpalavra(palavras, &matriz[0][0]);
-    imprimirmatrizcolorida(&matriz[0][0]);
-    printf("\n\n\n");
-    gerarmatriz(&matriz[0][0]);
-    imprimirmatriz(&matriz[0][0]);
+
+    inicializarMatriz(&matriz[0][0]);
+
+    posicionarPalavra(palavras, &matriz[0][0]);
+
+    char matriz_resposta[MAX][MAX];
+    
+    for(int i=0; i<MAX; i++){
+        for(int j=0; j<MAX; j++){
+            matriz_resposta[i][j] = matriz[i][j];
+        }
+    }
+
+    gerarMatriz(&matriz[0][0]);
+
+    puts("\n\n Precione [ENTER] para ver o caça paralvras.\n");
+    getchar();
+
+    imprimirMatrizColorida(&matriz[0][0]);
+
+    puts("\n\n Precione [ENTER] para ver a resolução do caça paralvras.\n");
+    getchar();
+
+    imprimirMatrizColorida(&matriz_resposta[0][0]);
+
+    puts("\n\n Precione [ENTER] para finalizar o programa.\n");
+    getchar();
+
+
     return 0;
 }
 
