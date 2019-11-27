@@ -72,14 +72,14 @@ void posicionarPalavra(char **palavras, char *matriz){
             if(cont > 350) break;
             posicao[k]=linha;
             k++;
-            if(i<=4){
+            if(i<=3){
                 for(j=0; j<NL; j++){
                     *(matriz+linha*20+coluna+j+1)=*(palavras[i]+j);
                 }
             }
             else{
                 for(j=NL-1; j>=0; j--){
-                    *(matriz+linha*20+coluna+(NL-j)+1)=*(palavras[i]+j);
+                    *(matriz+linha*20+coluna+(NL-j))=*(palavras[i]+j);
                 }
             }
         }
@@ -119,7 +119,7 @@ void posicionarPalavra(char **palavras, char *matriz){
             }
             else{
                 for(j=NL-1; j>=0; j--){
-                    *(matriz+(linha+(NL-j))*20+coluna+1)=*(palavras[i]+j);
+                    *(matriz+(linha+(NL-j-1))*20+coluna+1)=*(palavras[i]+j);
                 }
             }
         }
@@ -178,6 +178,7 @@ void posicionarPalavra(char **palavras, char *matriz){
         }
 
     }while(!verificador);
+    
     
 }
 
@@ -271,14 +272,16 @@ int main(void){
     puts("\n\n Precione [ENTER] para ver o caça paralvras.");
     getchar();
 
+    puts("\n Caça-Palavras:\n");
     imprimirMatrizColorida(&matriz[0][0]);
 
-    puts("\n Precione [ENTER] para ver a resolução do caça paralvras.");
+    puts("\n Precione [ENTER] para ver a resolução do caça paralvras.\n");
     getchar();
 
+    puts(" Resposta:\n");
     imprimirMatrizColorida(&matriz_resposta[0][0]);
 
-    puts("\n Precione [ENTER] para finalizar o programa.");
+    puts("\n Precione [ENTER] para finalizar o programa.\n");
     getchar();
 
     return 0;
