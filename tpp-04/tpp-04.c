@@ -271,14 +271,16 @@ int main(void){
     puts("\n\n Precione [ENTER] para ver o caça paralvras.");
     getchar();
 
+    puts("\n Caça-Palavras:\n");
     imprimirMatrizColorida(&matriz[0][0]);
 
-    puts("\n Precione [ENTER] para ver a resolução do caça paralvras.");
+    puts("\n Precione [ENTER] para ver a resolução do caça paralvras.\n");
     getchar();
 
+    puts(" Resposta:\n");
     imprimirMatrizColorida(&matriz_resposta[0][0]);
 
-    puts("\n Precione [ENTER] para finalizar o programa.");
+    puts("\n Precione [ENTER] para finalizar o programa.\n");
     getchar();
 
     return 0;
