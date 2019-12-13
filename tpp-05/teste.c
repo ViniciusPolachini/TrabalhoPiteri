@@ -91,7 +91,7 @@ void multiplicaPolinomio(No *ini){
         criaPolinomio(&ini_R,&fim_R,COEF(p)*k,EXPO(p));
         p=PROX(p);
     }while(p!=NULL);
-    printf("Resposta:\n");
+    printf("\nResposta:\n");
     imprime(&ini_R);
 }
 
@@ -101,7 +101,7 @@ void derivaPolinomio(No *ini){
         criaPolinomio(&ini_R,&fim_R,COEF(p)*EXPO(p),EXPO(p)-1);
         p=PROX(p);
     }while(p!=NULL);
-    printf("Resposta:\n");
+    printf("\nResposta:\n");
     imprime(&ini_R);
 }
 
@@ -110,16 +110,20 @@ void infoPolinomio(No *ini){
     No p=*ini;
     grau=EXPO(p);
     for(;p!=NULL; p=PROX(p)) elemento++;
-    printf("GRAU:%d\nELEMENTOS:%d",grau,elemento);
+    printf("\nGRAU:%d\nELEMENTOS:%d",grau,elemento);
 }
 
 void calculaPolinomio(No *ini){
     double X, R=0;
+    int pot=1;
     No p=*ini;
     printf("De um valor para X: ");
     scanf("%lf", &X);
-    for(;p!=NULL; p=PROX(p)) R+=(pow(X,EXPO(p)))*COEF(p);
-    printf("Resultado: %lf", R);
+    for(;p!=NULL; p=PROX(p)){ 
+        for(int i=0; i<EXPO(p);i++) pot*=X;
+        R+=pot*COEF(p);
+    }
+    printf("\nResultado: %lf", R);
 }
 
 void multiplicaPolinomios(No *ini_P, No *ini_Q){
@@ -129,7 +133,7 @@ void multiplicaPolinomios(No *ini_P, No *ini_Q){
            criaPolinomio(&ini_R,&fim_R,(COEF(p)*COEF(q)),(EXPO(p)+EXPO(q)));
        }
    }
-    printf("Polinomio R:\n");
+    printf("\nResposta:\n");
     imprime(&ini_R);
 }
 
@@ -150,7 +154,7 @@ void somaPolinomios(No *ini_P, No *ini_Q){
             p=PROX(p);
         }
     }while(p!=NULL||q!=NULL);
-    printf("Polinomio R:\n");
+    printf("\nResposta:\n");
     imprime(&ini_R);
 }
 
@@ -161,23 +165,54 @@ int main(){
     double coef;
     do{
         system(CLEAR);
+        if(ini_P==NULL && ini_Q==NULL) printf("[ATENÇÃO]: Polinomios inexistente\n\n");
+        else if(ini_P==NULL){
+            printf("Polinomio_Q: ");
+            imprime(&ini_Q);
+            printf("\n");
+        }
+        else if(ini_Q==NULL){
+            printf("Polinomio_P: ");
+            imprime(&ini_P);
+            printf("\n");
+        }
+        else{
+            printf("Polinomio_P: ");
+            imprime(&ini_P);
+            printf("Polinomio_Q: ");
+            imprime(&ini_Q);
+            printf("\n");
+        }
         puts(OPCOES);
         printf("\n\nEscolha uma função: ");
         scanf("%d", &X);
         //Cria Polinomios
         if(X==1){
-            do{
+            system(CLEAR);
+            printf("[1]Polinomio P\n[2]Polinomio Q\n[3]Polinomio Q e P\n\nEscolha uma opção: ");
+            scanf("%d", &X);
+            if(X==1){
+                ini_P=(No)NULL;
+                fim_P=(No)NULL;
+                do{
+                    system(CLEAR);
+                    printf("Polinomio P:\n\n");
+                    printf("\nIntroduza o coeficiente que acompanha x: ");
+                    scanf("%lf", &coef);
+                    printf("\nIntroduza o expoente que acompanha %lfx: ", coef);
+                    scanf("%d", &expo);
+                    criaPolinomio(&ini_P,&fim_P, coef, expo);
+                    printf("Deseja inserir mais termos?\n[1]SIM || [2]NAO\nR: ");
+                    scanf("%d", &X);
+                }while(X!=2);
                 system(CLEAR);
-                printf("Polinomio P:\n\n");
-                printf("\nIntroduza o coeficiente que acompanha x: ");
-                scanf("%lf", &coef);
-                printf("\nIntroduza o expoente que acompanha %lfx: ", coef);
-                scanf("%d", &expo);
-                criaPolinomio(&ini_P,&fim_P, coef, expo);
-                printf("Deseja inserir mais termos?\n[1]SIM || [2]NAO\nR: ");
-                scanf("%d", &X);
-            }while(X!=2);
-             do{
+                printf("Polinomio P:\n");
+                imprime(&ini_P);
+            }
+            else if(X==2){
+                ini_Q=(No)NULL;
+                fim_Q=(No)NULL;
+                do{
                 system(CLEAR);
                 printf("Polinomio Q:\n\n");
                 printf("\nIntroduza o coeficiente que acompanha x: ");
@@ -187,117 +222,194 @@ int main(){
                 criaPolinomio(&ini_Q,&fim_Q, coef, expo);
                 printf("Deseja inserir mais termos?\n[1]SIM || [2]NAO\nR: ");
                 scanf("%d", &X);
-            }while(X!=2);
-            printf("Polinomio P:\n");
-            imprime(&ini_P);
-            printf("Polinomio Q:\n");
-            imprime(&ini_Q);
-        }
-        //SomaPolinomios
-        else if(X==2){
-            system(CLEAR);
-            printf("Polinomio P:\n");
-            imprime(&ini_P);
-            printf("Polinomio Q:\n");
-            imprime(&ini_Q);
-            somaPolinomios(&ini_P, &ini_Q);
-        }
-        //MultiplicaPolinomios
-        else if(X==3){
-            system(CLEAR);
-            printf("Polinomio P:\n");
-            imprime(&ini_P);
-            printf("Polinomio Q:\n");
-            imprime(&ini_Q);
-            multiplicaPolinomios(&ini_P, &ini_Q);
-        }
-        //Calcula Polinomio para um X
-        else if(X==4){
-            system(CLEAR);
-            printf("[1]Polinomio P:\n");
-            imprime(&ini_P);
-            printf("[2]Polinomio Q:\n");
-            imprime(&ini_Q);
-            printf("\nEscolha um Polinomio: ");
-            scanf("%d", &X);
-            if(X==1){
-                system(CLEAR);
-                printf("Polinomio P:\n");
-                imprime(&ini_P);
-                calculaPolinomio(&ini_P);
-            }
-            else if(X==2){
+                }while(X!=2);
                 system(CLEAR);
                 printf("Polinomio Q:\n");
                 imprime(&ini_Q);
-                calculaPolinomio(&ini_Q);
+            }
+            else if(X==3){
+                do{
+                    ini_P=(No)NULL;
+                    fim_P=(No)NULL;
+                    ini_Q=(No)NULL;
+                    fim_Q=(No)NULL;
+                    system(CLEAR);
+                    printf("Polinomio P:\n\n");
+                    printf("\nIntroduza o coeficiente que acompanha x: ");
+                    scanf("%lf", &coef);
+                    printf("\nIntroduza o expoente que acompanha %lfx: ", coef);
+                    scanf("%d", &expo);
+                    criaPolinomio(&ini_P,&fim_P, coef, expo);
+                    printf("Deseja inserir mais termos?\n[1]SIM || [2]NAO\nR: ");
+                    scanf("%d", &X);
+                }while(X!=2);
+                do{
+                    system(CLEAR);
+                    printf("Polinomio Q:\n\n");
+                    printf("\nIntroduza o coeficiente que acompanha x: ");
+                    scanf("%lf", &coef);
+                    printf("\nIntroduza o expoente que acompanha %lfx: ", coef);
+                    scanf("%d", &expo);
+                    criaPolinomio(&ini_Q,&fim_Q, coef, expo);
+                    printf("Deseja inserir mais termos?\n[1]SIM || [2]NAO\nR: ");
+                    scanf("%d", &X);
+                }while(X!=2);
+                system(CLEAR);
+                printf("Polinomio P:\n");
+                imprime(&ini_P);
+                printf("\nPolinomio Q:\n");
+                imprime(&ini_Q);
+            }
+        }
+        //SomaPolinomios
+        else if(X==2){
+            if(ini_Q!=NULL && ini_P!=NULL){
+                system(CLEAR);
+                printf("Polinomio P:\n");
+                imprime(&ini_P);
+                printf("Polinomio Q:\n");
+                imprime(&ini_Q);
+                somaPolinomios(&ini_P, &ini_Q);
+            }
+            else{
+                system(CLEAR);
+                printf("[ALERTA]: São necessários dois polinômios para essa operação\n");
+            }
+        }
+        //MultiplicaPolinomios
+        else if(X==3){
+            if(ini_Q!=NULL && ini_P!=NULL){
+                system(CLEAR);
+                printf("Polinomio P:\n");
+                imprime(&ini_P);
+                printf("Polinomio Q:\n");
+                imprime(&ini_Q);
+                multiplicaPolinomios(&ini_P, &ini_Q);
+            }
+            else{
+                system(CLEAR);
+                printf("[ALERTA]: São necessários dois polinômios para essa operação\n");
+            }
+        }
+        //Calcula Polinomio para um X
+        else if(X==4){
+            if(ini_Q!=NULL || ini_P!=NULL){
+                system(CLEAR);
+                printf("[1]Polinomio P:\n");
+                if(ini_P!=NULL) imprime(&ini_P);
+                else printf("[VAZIO]\n");
+                printf("[2]Polinomio Q:\n");
+                if(ini_Q!=NULL) imprime(&ini_Q);
+                else printf("[VAZIO]\n");
+                printf("\nEscolha um Polinomio: ");
+                scanf("%d", &X);
+                if(X==1){
+                    system(CLEAR);
+                    printf("Polinomio P:\n");
+                    imprime(&ini_P);
+                    calculaPolinomio(&ini_P);
+                }
+                else if(X==2){
+                    system(CLEAR);
+                    printf("Polinomio Q:\n");
+                    imprime(&ini_Q);
+                    calculaPolinomio(&ini_Q);
+                }
+            }
+            else{
+                system(CLEAR);
+                printf("[ALERTA]: É necessário pelo menos 1 polinomio\n");
             }
         }
         //MultiplicaPolinomio
         else if(X==5){
-            system(CLEAR);
-            printf("[1]Polinomio P:\n");
-            imprime(&ini_P);
-            printf("[2]Polinomio Q:\n");
-            imprime(&ini_Q);
-            printf("\nEscolha um Polinomio: ");
-            scanf("%d", &X);
-            if(X==1){
+            if(ini_Q!=NULL || ini_P!=NULL){
                 system(CLEAR);
-                printf("Polinomio P:\n");
-                imprime(&ini_P);
-                multiplicaPolinomio(&ini_P);
+                printf("[1]Polinomio P:\n");
+                if(ini_P!=NULL) imprime(&ini_P);
+                else printf("[VAZIO]\n");
+                printf("[2]Polinomio Q:\n");
+                if(ini_Q!=NULL) imprime(&ini_Q);
+                else printf("[VAZIO]\n");
+                printf("\nEscolha um Polinomio: ");
+                scanf("%d", &X);
+                if(X==1){
+                    system(CLEAR);
+                    printf("Polinomio P:\n");
+                    imprime(&ini_P);
+                    multiplicaPolinomio(&ini_P);
+                }
+                else if(X==2){
+                    system(CLEAR);
+                    printf("Polinomio Q:\n");
+                    imprime(&ini_Q);
+                    multiplicaPolinomio(&ini_Q);
+                }
             }
-            else if(X==2){
+            else{
                 system(CLEAR);
-                printf("Polinomio Q:\n");
-                imprime(&ini_Q);
-                multiplicaPolinomio(&ini_Q);
+                printf("[ALERTA]: É necessário pelo menos 1 polinomio\n");
             }
         }
         //Deriva Polinomio
         else if(X==6)
         {
-            system(CLEAR);
-            printf("[1]Polinomio P:\n");
-            imprime(&ini_P);
-            printf("[2]Polinomio Q:\n");
-            imprime(&ini_Q);
-            printf("\nEscolha um Polinomio: ");
-            scanf("%d", &X);
-            if(X==1){
+            if(ini_Q!=NULL || ini_P!=NULL){
                 system(CLEAR);
-                printf("Polinomio P:\n");
-                imprime(&ini_P);
-                derivaPolinomio(&ini_P);
+                printf("[1]Polinomio P:\n");
+                if(ini_P!=NULL) imprime(&ini_P);
+                else printf("[VAZIO]\n");
+                printf("[2]Polinomio Q:\n");
+                if(ini_Q!=NULL) imprime(&ini_Q);
+                else printf("[VAZIO]\n");
+                printf("\nEscolha um Polinomio: ");
+                scanf("%d", &X);
+                if(X==1){
+                    system(CLEAR);
+                    printf("Polinomio P:\n");
+                    imprime(&ini_P);
+                    derivaPolinomio(&ini_P);
+                }
+                else if(X==2){
+                    system(CLEAR);
+                    printf("Polinomio Q:\n");
+                    imprime(&ini_Q);
+                    derivaPolinomio(&ini_Q);
+                }
             }
-            else if(X==2){
-                system(CLEAR);
-                printf("Polinomio Q:\n");
-                imprime(&ini_Q);
-                derivaPolinomio(&ini_Q);
+            else{
+                 system(CLEAR);
+                printf("[ALERTA]: É necessário pelo menos 1 polinomio\n");
             }
         }
         //Grau e elementos do Polinomio
         else if(X==7){
-            system(CLEAR);
-            printf("[1]Polinomio P:\n");
-            imprime(&ini_P);
-            printf("[2]Polinomio Q:\n");
-            imprime(&ini_Q);
-            printf("\nEscolha um Polinomio: ");
-            scanf("%d", &X);
-            if(X==1){
+            if(ini_Q!=NULL || ini_P!=NULL){
                 system(CLEAR);
-                printf("Polinomio P:\n");
-                imprime(&ini_P);
-                infoPolinomio(&ini_P);
+                printf("[1]Polinomio P:\n");
+                if(ini_P!=NULL) imprime(&ini_P);
+                else printf("[VAZIO]\n");
+                printf("[2]Polinomio Q:\n");
+                if(ini_Q!=NULL) imprime(&ini_Q);
+                else printf("[VAZIO]\n");
+                printf("\nEscolha um Polinomio: ");
+                scanf("%d", &X);
+                if(X==1){
+                    system(CLEAR);
+                    printf("Polinomio P:\n");
+                    imprime(&ini_P);
+                    infoPolinomio(&ini_P);
+                }
+                else if(X==2){
+                    system(CLEAR);
+                    printf("Polinomio Q:\n");
+                    imprime(&ini_Q);
+                    infoPolinomio(&ini_Q);
+                }
             }
-            else if(X==2){
+            else{
                 system(CLEAR);
-                printf("Polinomio Q:\n");
-                imprime(&ini_Q);
-                infoPolinomio(&ini_Q);
+                printf("[ALERTA]: É necessário pelo menos 1 polinomio\n");
             }
         }
         else if(X==8){
